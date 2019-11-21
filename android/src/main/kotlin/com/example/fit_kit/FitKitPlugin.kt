@@ -122,11 +122,14 @@ class FitKitPlugin(private val registrar: Registrar) : MethodCallHandler {
     private fun readSample(request: ReadRequest, result: Result) {
         Log.d(TAG, "readSample: ${request.type}")
 
-        val readRequest = DataReadRequest.Builder()
+        val requestBuilder = DataReadRequest.Builder()
                 .read(request.dataType)
-                .bucketByTime(1, TimeUnit.DAYS)
                 .setTimeRange(request.dateFrom.time, request.dateTo.time, TimeUnit.MILLISECONDS)
                 .enableServerQueries()
+        if (request.limit != null && request.limit > 0) {
+            requestBuilder.setLimit(request.limit.toInt())
+        }
+        val readRequest = requestBuilder
                 .build()
 
         Fitness.getHistoryClient(registrar.context(), GoogleSignIn.getLastSignedInAccount(registrar.context())!!)
@@ -137,7 +140,7 @@ class FitKitPlugin(private val registrar: Registrar) : MethodCallHandler {
     }
 
     private fun onSuccess(response: DataReadResponse, result: Result) {
-        response.buckets.flatMap { it.dataSets }
+        response.dataSets
                 .filterNot { it.isEmpty }
                 .flatMap { it.dataPoints }
                 .map(::dataPointToMap)

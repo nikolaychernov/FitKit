@@ -1,8 +1,8 @@
 name: fit_kit
 description: Flutter plugin for reading health and fitness data. Wraps HealthKit on iOS and GoogleFit on Android.
-version: 0.0.6
-author: Martin Anderson <martins.andersons@hotmail.com>
-homepage: https://github.com/krokyze/fitkit
+version: 0.0.7
+author: Nikolay Chernov <40inchverticalrus@gmail.com>
+homepage: https://github.com/nikolaychernov/fitkit
 
 environment:
   sdk: ">=2.1.0 <3.0.0"

@@ -30,8 +30,9 @@ class _MyAppState extends State<MyApp> {
         for (DataType type in DataType.values) {
           final data = await FitKit.read(
             type,
-            DateTime.now().subtract(Duration(days: 5)),
+            DateTime.fromMillisecondsSinceEpoch(1),
             DateTime.now(),
+            3
           );
 
           final result = "Type $type = ${data.length} $data\n\n\n";

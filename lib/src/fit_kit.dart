@@ -10,14 +10,12 @@ class FitKit {
   }
 
   static Future<List<FitData>> read(
-    DataType type,
-    DateTime dateFrom,
-    DateTime dateTo,
-  ) async {
+      DataType type, DateTime dateFrom, DateTime dateTo, int limit) async {
     return await _channel.invokeListMethod('read', {
       "type": _dataTypeToString(type),
       "date_from": dateFrom.millisecondsSinceEpoch,
       "date_to": dateTo.millisecondsSinceEpoch,
+      "limit": limit,
     }).then(
       (response) => response.map((item) => FitData.fromJson(item)).toList(),
     );
